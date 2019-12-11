@@ -128,12 +128,11 @@ const addPipline = (cpu) => {
     let opcode = cpu.opcodes[cpu.readData(cpu.registers.programCounter)]
 
     if (!opcode) {
-      cpu.registers.programCounter += 1
-      return fetch()
+      opcode = cpu.opcodes[0xea]
     }
 
     let instruction = {
-      opcode: cpu.opcodes[cpu.readData(cpu.registers.programCounter)],
+      opcode: opcode,
       param: 0
     }
 

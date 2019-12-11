@@ -4,7 +4,6 @@
 
 const create6502 = require('./6502').create6502
 const createMemory = require('./memory').createMemory
-const bus = require('./bus').bus
 
 const fs = require('fs')
 
