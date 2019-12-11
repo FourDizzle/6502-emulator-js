@@ -149,19 +149,19 @@ const getInstructions = (cpu) => {
 
     bcc: (inst) => {
       if (!cpu.getCarryFlag()) {
-        setJump(inst.target)
+        setJump(inst)
       }
     },
 
     bcs: (inst) => {
       if (cpu.getCarryFlag()) {
-        setJump(inst.target)
+        setJump(inst)
       }
     },
 
     beq: (inst) => {
       if (cpu.getZeroFlag()) {
-        setJump(inst.target)
+        setJump(inst)
       }
     },
 
@@ -174,21 +174,19 @@ const getInstructions = (cpu) => {
 
     bmi: (inst) => {
       if (cpu.getNegativeFlag()) {
-        setJump(inst.target)
+        setJump(inst)
       }
     },
 
     bne: (inst) => {
       if (!cpu.getZeroFlag()) {
-        console.log('bne', inst)
-        // setJump(inst.target)
-        cpu.registers.programCounter = inst.target
+        setJump(inst)
       }
     },
 
     bpl: (inst) => {
       if (!cpu.getNegativeFlag()) {
-        setJump(inst.target)
+        setJump(inst)
       }
     },
 
@@ -202,17 +200,18 @@ const getInstructions = (cpu) => {
       let address = cpu.readData(0xfffe)
       address += cpu.readData(0xffff) * 0x100
       cpu.registers.programCounter = address
+      // cpu.state = 'BRK'
     },
 
     bvc: (inst) => {
       if (!cpu.getOverflowFlag()) {
-        setJump(inst.target)
+        setJump(inst)
       }
     },
 
     bvs: (inst) => {
       if (cpu.getOverflowFlag()) {
-        setJump(inst.target)
+        setJump(inst)
       }
     },
 
@@ -438,8 +437,32 @@ const getInstructions = (cpu) => {
       cpu.setZeroFlag(cpu.registers.accumulator === 0)
       cpu.setNegativeFlag(cpu.registers.accumulator >= 0x80)
     },
-  }
 
+    print: (inst) => {
+      cpu.writeData(0x0c03, 0)
+      console.log('')
+      console.loc('******* PRINTIN', cpu.registers.accumulator, '************')
+      console.log('')
+    },
+
+    load: (inst) => {
+      console.log('')
+      console.loc('******* LOAD ************')
+      console.log('')
+      cpu.registers.programCounter = 0x0816
+    },
+
+    scan: (inst) => {
+      cpu.registers.accumulator = 3
+    },
+
+    exit: (inst) => {
+      cpu.stop = true
+      console.log('')
+      console.loc('******* EXIT ************')
+      console.log('')
+    }
+  }
   return instructions
 }
 

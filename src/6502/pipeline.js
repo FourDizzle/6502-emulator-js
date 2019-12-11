@@ -24,7 +24,7 @@ const addPipline = (cpu) => {
     } else {
       res = num;
     }
-    console.log('signed', res)
+    // console.log('signed', res)
     return res
   }
 
@@ -79,7 +79,7 @@ const addPipline = (cpu) => {
 
   const setTarget = (inst) => {
     inst.target = modes[inst.opcode.mode](inst.param)
-    console.log('target set', inst)
+    // console.log('target set', inst)
     return inst
   }
 
@@ -110,9 +110,9 @@ const addPipline = (cpu) => {
 
     cpu.registers.programCounter = address
 
-    console.log('finished isr')
-    console.log(cpu.registers)
-    console.log('\n')
+    // console.log('finished isr')
+    // console.log(cpu.registers)
+    // console.log('\n')
 
     if (cpu.state !== 'BRK') cpu.state = 'RUN'
   }
@@ -167,14 +167,15 @@ const addPipline = (cpu) => {
 
     cpu.masterclock += instruction.opcode.cycles
 
-    console.log('after', name)
-    console.log(cpu.registers)
-    console.log('\n')
+    // console.log('after', name)
+    // console.log(cpu.registers)
+    // console.log('\n')
 
     return instruction
   }
 
   cpu.next = () => {
+    if (typeof cpu.registers.programCounter !== 'number') return false
     if (cpu.state !== 'BRK') {
       checkISR()
       let instruction = fetch()

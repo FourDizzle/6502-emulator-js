@@ -265,7 +265,7 @@ const OPCODES = {
     opcode: 'brk',
     target: 'mode',
     hex: 0x00,
-    length: 1,
+    length: 2,
     cycles: 7,
     extracycles: ''
   },

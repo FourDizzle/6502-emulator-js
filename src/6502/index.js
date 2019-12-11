@@ -23,6 +23,8 @@ const create6502 = (memory) => {
   let cpu = {
     state: 'RESET',
 
+    stop: false,
+    
     vectors: {
       NMI: 0xfffa,
       RESET: 0xfffc,
